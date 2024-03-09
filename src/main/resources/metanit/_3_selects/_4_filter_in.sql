@@ -14,4 +14,13 @@ VALUES
       ('Galaxy S8 Plus', 'Samsung', 2, 46000),
       ('Desire 12', 'HTC', 3, 26000);
 
+/* Например, выберем товары, у которых производитель либо Samsung, либо Xiaomi, либо Huawei: */
+SELECT * FROM Products
+WHERE Manufacturer IN ('Samsung', 'HTC', 'Huawei');
 
+/* В качестве алтернативы можно было бы проверить все эти значения через оператор OR: */
+SELECT * FROM Products
+WHERE Manufacturer = 'Samsung' OR Manufacturer = 'HTC' OR Manufacturer = 'Huawei';
+
+SELECT * FROM Products
+WHERE Price BETWEEN 20000 AND 50000;
