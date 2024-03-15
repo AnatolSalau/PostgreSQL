@@ -54,8 +54,8 @@ VALUES (1, 1),
 
 SELECT employee.name AS employee_name, employee.age AS employee_age, position.name AS position_name
 FROM employee
-LEFT JOIN employee_position ON employee.id = employee_position.employee_id
-LEFT JOIN position ON employee_position.position_id = position.id;
+           LEFT JOIN employee_position ON employee.id = employee_position.employee_id
+           LEFT JOIN position ON employee_position.position_id = position.id;
 
 /*
       select all employee with position 1
@@ -66,26 +66,53 @@ FROM employee
            LEFT JOIN position ON employee_position.position_id = position.id
 WHERE position.name = 'position1';
 
+-------------------------------------------------------------------------------------------------------------------
 /*
       2. Create table person - bank many to many
  */
 
-CREATE TABLE person
+CREATE TABLE IF NOT EXISTS person
 (
       id        SERIAL PRIMARY KEY,
       full_name VARCHAR
 );
 
-CREATE TABLE bank
+CREATE TABLE IF NOT EXISTS bank
 (
       id   SERIAL PRIMARY KEY,
       name VARCHAR
 );
 
-CREATE TABLE person_bank
+CREATE TABLE IF NOT EXISTS person_bank
 (
       id        BIGSERIAL PRIMARY KEY,
       person_id INTEGER NOT NULL REFERENCES person,
       bank_id   INTEGER NOT NULL REFERENCES bank,
       UNIQUE (person_id, bank_id)
 );
+
+INSERT INTO person (full_name)
+VALUES ('person1'),
+       ('person2'),
+       ('person3'),
+       ('person4'),
+       ('person5');
+
+INSERT INTO bank (name)
+VALUES ('bank1'),
+       ('bank2'),
+       ('bank3');
+
+INSERT INTO person_bank (person_id, bank_id)
+VALUES (1, 1),
+       (2,2),
+       (3, 3),
+       (4, 1),
+       (5, 2);
+
+-- select all employee name with banks name
+SELECT person.full_name AS person_name, bank.name AS bank_name
+FROM person
+      LEFT JOIN person_bank ON person.id  = person_bank.person_id
+      LEFT JOIN bank on person_bank.bank_id = bank.id
+
