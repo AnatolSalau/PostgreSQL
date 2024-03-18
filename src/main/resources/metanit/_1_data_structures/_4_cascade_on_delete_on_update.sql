@@ -29,12 +29,62 @@ CREATE TABLE Customers
       FirstName VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE Orders
+/*CREATE TABLE Orders
 (
       Id SERIAL PRIMARY KEY,
       CustomerId INTEGER,
       Quantity INTEGER,
       FOREIGN KEY (CustomerId) REFERENCES Customers (Id) ON DELETE CASCADE
+);*/
+
+CREATE TABLE Orders
+(
+      Id SERIAL PRIMARY KEY,
+      CustomerId INTEGER,
+      Quantity INTEGER,
+      FOREIGN KEY (CustomerId) REFERENCES Customers (Id) ON DELETE RESTRICT
 );
+
+INSERT INTO Customers (Age, FirstName)
+VALUES (18, 'Customer1'),
+       (19, 'Customer2'),
+       (19, 'Customer3'),
+       (20, 'Customer4');
+
+INSERT INTO Orders (CustomerId, Quantity)
+VALUES (1, 10),
+       (2, 10),
+       (1, 20),
+       (2, 20);
+
+/* Select all customers name for all orders */
+SELECT Customers.Id AS customer_id, Customers.FirstName AS customer_name,Orders.Id AS order_id, Orders.Quantity AS order_quantity
+FROM Orders
+      RIGHT JOIN Customers On Orders.CustomerId = Customers.Id;
+
+/*
+Delete Customer1 with Delete Type -> Cascade
+
+1,Customer1,1,10
+2,Customer2,2,10
+1,Customer1,3,20
+2,Customer2,4,20
+4,Customer4,,
+3,Customer3,,
+
+*/
+DELETE FROM Customers WHERE Customers.FirstName = 'Customer1';
+
+/* Delete Customer1 with Delete Type -> Restrict*/
+
+DELETE FROM Customers WHERE Customers.FirstName = 'Customer1';
+-- - > ОШИБКА: UPDATE или DELETE в таблице "customers" нарушает ограничение внешнего ключа "orders_customerid_fkey" таблицы "orders
+
+UPDATE Orders
+SET CustomerId = NULL
+WHERE CustomerId = 1;
+
+DELETE FROM Customers WHERE Customers.Id = 1;
+
 
 
