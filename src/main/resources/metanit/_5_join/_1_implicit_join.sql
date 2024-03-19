@@ -70,3 +70,17 @@ WHERE Orders.CustomerId = Customers.Id;
 SELECT Customers.FirstName, Products.ProductName, Orders.CreatedAt
 FROM Orders, Customers, Products
 WHERE Orders.CustomerId = Customers.Id AND Orders.ProductId=Products.Id;
+
+SELECT * FROM orders;
+
+SELECT * FROM customers;
+
+SELECT * FROM  Orders, Customers;
+
+-- отфильтруем с помощью where
+SELECT * FROM  Orders, Customers
+WHERE Orders.CustomerId = Customers.Id;
+
+--соединим три таблицы
+SELECT * FROM Orders, Customers, Products
+WHERE Orders.CustomerId = Customers.Id AND Orders.Id = Products.Id;

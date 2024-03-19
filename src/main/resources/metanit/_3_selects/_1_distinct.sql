@@ -16,4 +16,4 @@ VALUES
 /*
  Оператор DISTINCT позволяет выбрать уникальные данные по определенным столбцам.
  */
-SELECT DISTINCT Manufacturer FROM Products;
+SELECT DISTINCT Company FROM Products;
