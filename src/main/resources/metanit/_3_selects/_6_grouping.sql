@@ -40,3 +40,19 @@ WHERE Price * ProductCount > 80000
 GROUP BY Company
 HAVING COUNT(*) > 1;
 
+--select all from Products
+SELECT * FROM Products;
+
+--select qty wit qty Product names
+SELECT Company, count(ProductName) AS qty_products FROM Products
+GROUP BY Company ;
+
+--select company which have more than 1 product name
+SELECT Company, count(ProductName) AS qty_products FROM Products
+GROUP BY Company
+HAVING count(ProductName) > 1;
+
+--calculate sum Productcount in every company
+SELECT Company, sum(ProductCount) As qty FROM Products
+GROUP BY Company;
+
