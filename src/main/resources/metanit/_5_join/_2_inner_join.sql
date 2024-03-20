@@ -68,3 +68,19 @@ SELECT Orders.CreatedAt, Customers.FirstName, Products.ProductName
 FROM Orders
          JOIN Products ON Products.Id = Orders.ProductId
          JOIN Customers ON Customers.Id=Orders.CustomerId;
+
+-- выводим все заказы для покупателей
+SELECT Customers.FirstName, Orders.ProductId, Orders.Price
+FROM Customers
+      JOIN Orders ON Customers.Id = Orders.CustomerId;
+
+-- выведим все товары (их имя и цена) связанные с заказами (количество товаров)
+SELECT Products.ProductName AS product_name,Orders.Price AS price,  Orders.ProductCount AS count
+FROM Products
+      JOIN Orders ON Products.Id = Orders.ProductId;
+
+--отсортируем по цене
+SELECT Products.ProductName AS product_name,Products.Price AS price,  Orders.ProductCount AS count
+FROM Products
+           JOIN Orders ON Products.Id = Orders.ProductId
+ORDER BY Products.Price;
