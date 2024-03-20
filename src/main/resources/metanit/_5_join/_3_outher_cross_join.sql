@@ -94,3 +94,23 @@ FROM Orders FULL JOIN Customers
  */
 
 SELECT * FROM Orders CROSS JOIN Customers;
+
+--выведим всех клиентов  и заказы с ценой заказа и количеством
+SELECT Customers.FirstName, Orders.ProductCount, Orders.Price
+FROM Customers
+      LEFT JOIN Orders ON Customers.Id = Orders.CustomerId;
+
+--выведим клиентов только у которых есть заказы
+SELECT Customers.FirstName, Orders.ProductCount, Orders.Price
+FROM Customers
+           RIGHT JOIN  Orders ON Customers.Id = Orders.CustomerId;
+
+--выведем полное соединение
+SELECT Customers.FirstName, Orders.ProductCount, Orders.Price
+FROM Customers
+           FULL JOIN  Orders ON Customers.Id = Orders.CustomerId;
+
+--выведем полное соединение заказов и продуктов
+SELECT Orders.Price, Orders.ProductCount, Products.ProductName
+FROM Orders
+      FULL JOIN Products ON Orders.ProductId = Products.Id;
