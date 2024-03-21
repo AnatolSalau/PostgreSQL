@@ -61,3 +61,22 @@ SELECT FirstName, COUNT(Orders.Id)
 FROM Customers JOIN Orders
                     ON Orders.CustomerId = Customers.Id
 GROUP BY Customers.Id, Customers.FirstName;
+
+--выведим количество продуктов для каждого id
+SELECT ProductId, count(ProductCount) FROM Orders GROUP BY ProductId;
+
+--добавим название продукта
+SELECT Products.ProductName, count(Orders.ProductCount)
+FROM Products
+      JOIN Orders ON Products.Id = Orders.ProductId
+GROUP BY Products.ProductName;
+
+--Например, выведем для каждого покупателя количество заказов, которые он сделал:
+SELECT Customers.FirstName, count(Orders.ProductCount), Products.ProductName
+FROM Customers
+      LEFT JOIN Orders ON Customers.Id = Orders.CustomerId
+      LEFT JOIN Products ON Orders.ProductId = Products.Id
+GROUP BY Customers.FirstName, Products.ProductName;
+
+
+
