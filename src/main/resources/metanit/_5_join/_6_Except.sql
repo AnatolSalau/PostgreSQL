@@ -30,4 +30,12 @@ SELECT FirstName, LastName
 FROM Customers
 EXCEPT SELECT FirstName, LastName
 FROM Employees;
+/* нам надо найти всех клиентов банка, которые не являются его сотрудниками: */
+SELECT firstname || ' ' || lastname AS fullname
+FROM Customers
+EXCEPT SELECT firstname || ' ' || lastname
+FROM Employees;
+/* Подобным образом можно получить всех сотрудников банка, которые не являются его клиентами: */
+
+
 

@@ -18,6 +18,7 @@
  Вывести наименование районов, где code города = мск, где есть дома с кол-вом
  этажем менее 6
  И число таких домов на районе более одного
+
  */
 
 CREATE TABLE IF NOT EXISTS CITY
@@ -73,25 +74,23 @@ VALUES (1, 5),
        (4, 25);
 
 /*
-     Вывести наименование районов, где code города = мск, где есть дома с кол-вом
-     этажем менее 6
-     И число таких домов на районе более одного
+ Вывести наименование районов, где code города = мск, где есть дома с кол-вом
+ этажем менее 6
+ И число таких домов на районе более одного
  */
--- вывести города с код mck
-SELECT CITY.name as city_name FROM CITY WHERE code = 'mck';
 
--- Вывести наименование районов, где code города = мск,
-SELECT CITY.code as city_code, DISTRICT.name as district_name FROM CITY
-    LEFT JOIN DISTRICT on CITY.id = DISTRICT.city_id
-    WHERE CITY.code = 'mck';
-
--- Вывести наименование районов, где code города = мск, где есть дома с кол-вом этажем менее 6
-
-/*SELECT CITY.code as city_name, DISTRICT.name as district_name, HOUSE.number_of_floors as number_of_floors
-FROM CITY
-    LEFT JOIN DISTRICT ON CITY.id = DISTRICT.city_id
+/*
+   1. Сгруппировать и посчитать количество домов с этажами меньше 5 в каждом районе
+   2. Добавить условие где CITY.code = 'mck'
+ */
+SELECT DISTRICT.name, CITY.code, count(number_of_floors)
+FROM DISTRICT
     LEFT JOIN HOUSE ON DISTRICT.id = HOUSE.district_id
-WHERE number_of_floors < 6 AND count(CITY.name);*/
+    LEFT JOIN CITY ON DISTRICT.city_id = CITY.id
+WHERE CITY.code = 'mck'
+GROUP BY DISTRICT.name, CITY.code;
+
+
 
 
 

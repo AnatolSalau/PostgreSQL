@@ -26,7 +26,8 @@ INSERT INTO Employees(FirstName, LastName) VALUES
                                                ('Mark', 'Adams'),
                                                ('Nick', 'Svensson');
 
-/* Найдем всех сотрудников банка, которые одновременно являются его клиентами. То есть нам надо найти общие элементы двух выборок: */
+/* Найдем всех сотрудников банка, которые одновременно являются его клиентами.
+   То есть нам надо найти общие элементы двух выборок: */
 SELECT FirstName, LastName
 FROM Employees
 INTERSECT SELECT FirstName, LastName
