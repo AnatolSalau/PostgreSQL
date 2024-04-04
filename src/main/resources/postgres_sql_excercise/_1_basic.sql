@@ -51,3 +51,22 @@ LIMIT 10;
   You, for some reason, want a combined list of all surnames and all facility names.
   Yes, this is a contrived example :-). Produce that list!
  */
+
+SELECT surname AS surname FROM cd.members
+UNION
+SELECT name AS surname FROM cd.facilities;
+
+/*
+ You'd like to get the first and last name of the last member(s) who signed up - not just the date. How can you do that?
+ */
+
+SELECT firstname, surname, joindate FROM cd.members
+WHERE joindate IN (SELECT MAX(joindate) FROM cd.members )
+
+select firstname, surname, joindate
+from cd.members
+order by joindate desc
+limit 1;
+
+
+
