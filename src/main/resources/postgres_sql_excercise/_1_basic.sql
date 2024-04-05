@@ -69,4 +69,33 @@ order by joindate desc
 limit 1;
 
 
+/*
+ Use the date function:
+
+select date(timestamp_field) from table
+From a character field representation to a date you can use:
+
+select date(substring('2011/05/26 09:00:00' from 1 for 10));
+Test code:
+
+create table test_table (timestamp_field timestamp);
+insert into test_table (timestamp_field) values(current_timestamp);
+select timestamp_field, date(timestamp_field) from test_table;
+ */
+select date(timestamp_field) from table
+
+/*
+ How can you produce a list of the start times for bookings for tennis courts, for the date '2012-09-21'?
+ Return a list of start time and facility name pairings, ordered by the time.
+ */
+SELECT starttime as start, name
+FROM cd.bookings
+           JOIN cd.facilities ON cd.bookings.facid = cd.facilities.facid
+WHERE
+            name like ('%Tennis Court%')
+  AND
+            date(starttime) = '2012-09-21'
+ORDER BY starttime;
+
+--https://pgexercises.com/questions/joins/self.html
 
