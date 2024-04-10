@@ -10,23 +10,20 @@ INSERT INTO accounts (name, balance) VALUES
       ('Two', 1000),
       ('Three', 1000);
 
- -- Change balance for user id = 1 and 2
-            -- Start the transaction
+
 DO $$
       BEGIN-- PostgreSQL anonymous code block
-            --SAVEPOINT start_transaction;
+
             UPDATE accounts SET balance = balance - 100 WHERE id = 1;
             IF NOT FOUND THEN
-                  --RAISE 'Account 1 not found';
-                  --ROLLBACK TO start_transaction;
+                  RAISE 'Account 1 not found';
             END IF;
 
             BEGIN
 
                   UPDATE accounts SET balance = balance - 100 WHERE id = 4;
                   IF NOT FOUND THEN
-                        --RAISE 'Account 2 not found';
-                        --ROLLBACK TO start_transaction;
+                        RAISE 'Account 2 not found';
                   END IF;
             END;
       COMMIT;
@@ -37,3 +34,22 @@ ABORT TRANSACTION ;
 
 SELECT * FROM accounts;
 
+
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+
+DO $$
+    BEGIN-- PostgreSQL anonymous code block
+
+    UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+    IF NOT FOUND THEN
+        RAISE 'Account 1 not found';
+    END IF;
+
+    UPDATE accounts SET balance = balance - 100 WHERE id = 4;
+    IF NOT FOUND THEN
+        RAISE 'Account 2 not found';
+    END IF;
+
+    COMMIT;
+    END;
+$$;
