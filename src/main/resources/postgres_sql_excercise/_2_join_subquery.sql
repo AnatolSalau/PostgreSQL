@@ -25,3 +25,7 @@ SELECT
 FROM cd.members  member
            LEFT JOIN cd.members AS recommender ON member.recommendedby = recommender.memid
 ORDER BY memsname, memfname;
+
+/*
+ https://pgexercises.com/questions/joins/threejoin.html
+ */
