@@ -50,6 +50,43 @@ where
             (mems.memid != 0 and bks.slots*facs.membercost > 30)
       )
 order by cost desc;
+
 /*
  https://pgexercises.com/questions/joins/sub.html
+ How can you output a list of all members, including the individual who recommended them (if any),
+ without using any joins? Ensure that there are no duplicates in the list,
+ and that each firstname + surname pairing is formatted as a column and ordered.
  */
+SELECT DISTINCT
+                  mem.firstname || ' ' || mem.surname AS member,
+                  (SELECT rec.firstname || ' ' || rec.surname AS recommender FROM cd.members AS rec
+                   WHERE mem.recommendedby = rec.memid
+                  )
+FROM cd.members AS mem
+ORDER BY member
+
+/*
+      https://pgexercises.com/questions/joins/tjsub.html
+      Produce a list of costly bookings, using a subquery
+ */
+select member, facility, cost FROM (
+                                         select mems.firstname || ' ' || mems.surname as member,
+                                                facs.name as facility,
+                                                case
+                                                      when mems.memid = 0 then
+                                                                  bks.slots*facs.guestcost
+                                                      else
+                                                                  bks.slots*facs.membercost
+                                                      end as cost
+                                         from
+                                               cd.members mems
+                                                     inner join cd.bookings bks
+                                                                on mems.memid = bks.memid
+                                                     inner join cd.facilities facs
+                                                                on bks.facid = facs.facid
+                                         where
+                                                     date(bks.starttime) >= '2012-09-14' and
+                                                     date(bks.starttime) < '2012-09-15'
+                                   ) AS bookings
+WHERE cost > 30
+order by cost desc;
