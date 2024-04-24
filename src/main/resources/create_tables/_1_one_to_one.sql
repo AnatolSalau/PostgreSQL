@@ -25,4 +25,8 @@ INSERT INTO measurement (name, value_id) VALUES
 SELECT name, data FROM measurement as meas
       JOIN value as val on meas.value_id = val.id;
 
+/*
+      One to one -> bidirectional
 
+      Measurement (one) -> Value (one)
+*/
