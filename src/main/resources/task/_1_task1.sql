@@ -60,7 +60,7 @@ VALUES ('pol', 'city_1'),
 INSERT INTO DISTRICT (city_id, name)
 VALUES (1, 'district_1'),
        (2, 'district_2'),
-       (3, 'district_3'),
+       (3, 'district_3'),-- right house with flors < 5
        (4, 'district_4');
 
 
@@ -70,7 +70,7 @@ VALUES (1, 5),
        (1, 5),
        (2, 5),
        (2, 5),
-       (3, 5), -- right house
+       (3, 5), -- right house with flors < 5
        (4, 25);
 
 /*
@@ -78,7 +78,12 @@ VALUES (1, 5),
  этажем менее 6
  И число таких домов на районе более одного
  */
+SELECT CITY.code, DISTRICT.name, HOUSE.number_of_floors FROM HOUSE
+    LEFT JOIN DISTRICT on DISTRICT.id = HOUSE.id
+    LEFT JOIN CITY on CITY.id = DISTRICT.id
+WHERE CITY.code = 'mck'
 
+;
 /*
    1. Сгруппировать и посчитать количество домов с этажами меньше 5 в каждом районе
    2. Добавить условие где CITY.code = 'mck'
