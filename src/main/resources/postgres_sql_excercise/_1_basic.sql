@@ -99,3 +99,20 @@ ORDER BY starttime;
 
 --https://pgexercises.com/questions/joins/self.html
 
+/*
+ How can you produce a list of all members who have used a tennis court? Include in your output the name of the court,
+ and the name of the member formatted as a single column. Ensure no duplicate data, and order by the member name followed by the facility name.
+ */
+SELECT DISTINCT firstname|| ' ' || surname AS member, name AS facility FROM cd.members AS mem
+                                                                                  JOIN cd.bookings AS book ON mem.memid = book.memid
+                                                                                  JOIN cd.facilities AS facil ON facil.facid = book.facid
+WHERE facil.name like ('%Tennis Court%')
+ORDER BY member, facility
+
+/*
+ https://pgexercises.com/questions/joins/threejoin2.html
+
+ */
+SELECT firstname || ' ' || surname AS member FROM cd.members AS mem
+              LEFT JOIN cd.bookings AS book ON mem.memid = book.memid
+WHERE date(starttime) = '2012-09-14'
